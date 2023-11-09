@@ -17,3 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/mysql
+/public/casino/*
+/public/game/*
+/public/game_type/*
