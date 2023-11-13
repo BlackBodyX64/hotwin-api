@@ -15,6 +15,18 @@ class CasinoController extends Controller
         $name = $request->name;
         $image = $request->file('image');
 
+        if (!$name) {
+            return response()->json([
+                'status' => false,
+                'message' => 'กรุณากรอกชื่อ'
+            ], 400);
+        } else if (!$image) {
+            return response()->json([
+                'status' => false,
+                'message' => 'กรุณาเลือกรูป'
+            ], 400);
+        }
+
         //บันทึกไฟล์ลง server
         $input = time() . '.' . $image->extension();
         $destinationPath = public_path('/casino');
@@ -78,7 +90,8 @@ class CasinoController extends Controller
     }
 
     //แก้ไข Casino
-    public function editCasino(Request $request, $id) {
+    public function editCasino(Request $request, $id)
+    {
         $name = $request->name;
         $image = $request->file('image');
 
@@ -114,7 +127,8 @@ class CasinoController extends Controller
     }
 
     //ลบข้อมูล
-    public function deleteCasino($id) {
+    public function deleteCasino($id)
+    {
         $casino = Casino::where('id', $id)->first();
         if (!$casino) {
             return response()->json([

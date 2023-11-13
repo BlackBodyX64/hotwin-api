@@ -15,6 +15,18 @@ class GameTypeController extends Controller
         $name = $request->name;
         $image = $request->file('image');
 
+        if (!$name) {
+            return response()->json([
+                'status' => false,
+                'message' => 'กรุณากรอกชื่อ'
+            ], 400);
+        } else if (!$image) {
+            return response()->json([
+                'status' => false,
+                'message' => 'กรุณาเลือกรูป'
+            ], 400);
+        }
+
         //บันทึกไฟล์ลง server
         $input = time() . '.' . $image->extension();
         $destinationPath = public_path('/game_type');

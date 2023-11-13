@@ -27,29 +27,53 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-
         $username = $request->username;
         $password = $request->password;
 
         $user = User::where('username', $username)
             ->where('password', md5($password))
+            ->where('role', 'user')
             ->first();
 
-        // ถ้าพบข้อมูล
-        if ($user) {
-
-            $user['token'] = $this->genToken($user->id);//สร้าง token
-
-            return response()->json([
-                'status' => true,
-                'data' => $user,
-            ], 200);
-        } else {
+        // ไม่พบข้อมูล
+        if (!$user) {
             return response()->json([
                 'status' => false,
                 'message' => 'ผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'
             ], 400);
         }
 
+        $user['token'] = $this->genToken($user->id); //สร้าง token
+
+        return response()->json([
+            'status' => true,
+            'data' => $user,
+        ], 200);
+    }
+
+    public function loginAdmin(Request $request)
+    {
+        $username = $request->username;
+        $password = $request->password;
+
+        $user = User::where('username', $username)
+            ->where('password', md5($password))
+            ->where('role', 'admin')
+            ->first();
+
+        // ไม่พบข้อมูล
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'ผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง'
+            ], 400);
+        }
+
+        $user['token'] = $this->genToken($user->id); //สร้าง token
+
+        return response()->json([
+            'status' => true,
+            'data' => $user,
+        ], 200);
     }
 }

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login_admin', [LoginController::class, 'loginAdmin']);
 
 Route::post('/register', [UserController::class, 'register']);
 

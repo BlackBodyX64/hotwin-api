@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('bank_name')->nullable();
             $table->string('username')->unique();
             $table->string('password');
+            $table->enum('role', ['admin', 'user']);
             $table->boolean('approve')->default(false);
             $table->timestamps();
         });

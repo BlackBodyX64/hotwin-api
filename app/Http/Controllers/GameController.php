@@ -10,7 +10,6 @@ class GameController extends Controller
 {
     public function add(Request $request)
     {
-
         $name = $request->name;
         $image = $request->file('image');
         $popular = $request->popular;
