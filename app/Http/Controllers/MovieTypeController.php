@@ -12,6 +12,15 @@ class MovieTypeController extends Controller
     {
         $name = $request->name;
 
+        //เช็คชื่อซ้ำ
+        $check_movie_type = MovieType::where('name', $name)->first();
+        if ($check_movie_type) {
+            return response()->json([
+                'status' => false,
+                'message' => 'มี ' . $name . ' ในระบบแล้ว',
+            ], 400);
+        }
+
         //บันทึกข้อมูลลงตาราง
         $movie_type = new MovieType();
         $movie_type->name = $name;
@@ -78,7 +87,8 @@ class MovieTypeController extends Controller
         ], 200);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $movie_type = MovieType::where('id', $id)->first();
         if (!$movie_type) {
             return response()->json([
