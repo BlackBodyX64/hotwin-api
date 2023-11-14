@@ -35,7 +35,7 @@ class MovieTypeController extends Controller
 
     public function view($id)
     {
-        $movie_type = MovieType::where('id', $id)->first();
+        $movie_type = MovieType::with('movies')->where('id', $id)->first();
 
         if (!$movie_type) {
             return response()->json([
@@ -52,7 +52,7 @@ class MovieTypeController extends Controller
 
     public function all()
     {
-        $movie_types = MovieType::get();
+        $movie_types = MovieType::with('movies')->get();
 
         return response()->json([
             'status' => true,
