@@ -4,6 +4,7 @@ use App\Http\Controllers\CasinoController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameTypeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieTypeController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\UserController;
@@ -50,6 +51,10 @@ Route::get('/all_promotion', [PromotionController::class, 'all']);
 Route::get('/view_movie_type/{id}', [MovieTypeController::class, 'view']);
 Route::get('/all_movie_type', [MovieTypeController::class, 'all']);
 
+//Movie
+Route::get('/view_movie/{id}', [MovieController::class, 'view']);
+Route::get('/all_movie', [MovieController::class, 'all']);
+
 Route::group(['middleware' => 'checkjwt'], function () {
 
     //Casino
@@ -76,4 +81,9 @@ Route::group(['middleware' => 'checkjwt'], function () {
     Route::post('/add_movie_type', [MovieTypeController::class, 'add']);
     Route::post('/edit_movie_type/{id}', [MovieTypeController::class, 'edit']);
     Route::delete('/delete_movie_type/{id}', [MovieTypeController::class, 'delete']);
+
+    //Movie
+    Route::post('/add_movie', [MovieController::class, 'add']);
+    Route::post('/edit_movie/{id}', [MovieController::class, 'edit']);
+    Route::delete('/delete_movie/{id}', [MovieController::class, 'delete']);
 });
