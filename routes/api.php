@@ -4,6 +4,7 @@ use App\Http\Controllers\CasinoController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\GameTypeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,10 @@ Route::get('/all_game_type', [GameTypeController::class, 'allGameType']);
 Route::get('/view_game/{id}', [GameController::class, 'view']);
 Route::get('/all_game', [GameController::class, 'all']);
 
+//Promotion
+Route::get('/view_promotion/{id}', [PromotionController::class, 'view']);
+Route::get('/all_promotion', [PromotionController::class, 'all']);
+
 Route::group(['middleware' => 'checkjwt'], function () {
 
     //Casino
@@ -56,4 +61,9 @@ Route::group(['middleware' => 'checkjwt'], function () {
     Route::post('/add_game', [GameController::class, 'add']);
     Route::post('/edit_game/{id}', [GameController::class, 'edit']);
     Route::delete('/delete_game/{id}', [GameController::class, 'delete']);
+
+    //Promotion
+    Route::post('/add_promotion', [PromotionController::class, 'add']);
+    Route::post('/edit_promotion/{id}', [PromotionController::class, 'edit']);
+    Route::delete('/delete_promotion/{id}', [PromotionController::class, 'delete']);
 });
