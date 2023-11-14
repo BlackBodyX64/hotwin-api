@@ -44,7 +44,7 @@ class MovieController extends Controller
 
     public function view($id)
     {
-        $movie = Movie::where('id', $id)->first();
+        $movie = Movie::with('movie_type')->where('id', $id)->first();
 
         if (!$movie) {
             return response()->json([
@@ -64,7 +64,7 @@ class MovieController extends Controller
 
     public function all()
     {
-        $movies = Movie::get();
+        $movies = Movie::with('movie_type')->get();
 
         //แทรก image_url เพิ่ม
         foreach ($movies as $movie) {
