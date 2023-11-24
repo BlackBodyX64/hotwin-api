@@ -104,17 +104,20 @@ class CasinoController extends Controller
         }
 
         //บันทึกไฟล์ลง server
-        $input = time() . '.' . $image->extension();
-        $destinationPath = public_path('/casino');
+        if ($image) {
+            $input = time() . '.' . $image->extension();
+            $destinationPath = public_path('/casino');
 
-        if (!File::exists($destinationPath)) {
-            File::makeDirectory($destinationPath, 0777, true);
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0777, true);
+            }
+            $image->move($destinationPath, $input);
+
+            $casino->image = '/casino/' . $input;
         }
-        $image->move($destinationPath, $input);
 
         //บันทึกข้อมูลใหม่
         $casino->name = $name;
-        $casino->image = '/casino/' . $input;
         $casino->save();
 
         $casino['image_url'] = url($casino->image);
@@ -173,6 +176,8 @@ class CasinoController extends Controller
         $casinos = $casinos
             ->orderBy($sortField, $direction)
             ->paginate($perPage, ['*'], 'page', $page);
+
+
 
         return response()->json([
             'status' => true,
