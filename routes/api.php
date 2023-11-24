@@ -61,7 +61,7 @@ Route::get('/all_movie', [MovieController::class, 'all']);
     Route::post('/add_casino', [CasinoController::class, 'addCasino']);
     Route::post('/edit_casino/{id}', [CasinoController::class, 'editCasino']);
     Route::delete('/delete_casino/{id}', [CasinoController::class, 'deleteCasino']);
-    Route::delete('/casino/page', [CasinoController::class, 'page']);
+    Route::post('/casino/page', [CasinoController::class, 'page']);
 
     //GameType
     Route::post('/add_game_type', [GameTypeController::class, 'addGameType']);
