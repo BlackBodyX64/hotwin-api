@@ -144,4 +144,40 @@ class CasinoController extends Controller
             'message' => 'สำเร็จ',
         ], 200);
     }
+
+    public function page(Request $request)
+    {
+        $perPage = $request->query('perPage', 10);
+        $page = $request->query('page', 1);
+        $search = $request->query('search', "");
+        $sortField = $request->query('sortField', 'id');
+        $sortOrder = $request->query('sortOrder', 1);
+
+        $direction = 'ASC';
+        if ($sortOrder == -1) {
+            $direction = 'DESC';
+        }
+
+        $seaclable = ['name'];
+
+        $casinos = Casino::where(
+            function ($query) use ($search, $seaclable) {
+                if ($search) {
+                    foreach ($seaclable as &$s) {
+                        $query->orWhere($s, 'LIKE', '%' . $search . '%');
+                    }
+                }
+            }
+        );
+
+        $casinos = $casinos
+            ->orderBy($sortField, $direction)
+            ->paginate($perPage, ['*'], 'page', $page);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'สำเร็จ',
+            'data' => $casinos,
+        ], 200);
+    }
 }

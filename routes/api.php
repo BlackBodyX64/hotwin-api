@@ -55,12 +55,13 @@ Route::get('/all_movie_type', [MovieTypeController::class, 'all']);
 Route::get('/view_movie/{id}', [MovieController::class, 'view']);
 Route::get('/all_movie', [MovieController::class, 'all']);
 
-Route::group(['middleware' => 'checkjwt'], function () {
+// Route::group(['middleware' => 'checkjwt'], function () {
 
     //Casino
     Route::post('/add_casino', [CasinoController::class, 'addCasino']);
     Route::post('/edit_casino/{id}', [CasinoController::class, 'editCasino']);
     Route::delete('/delete_casino/{id}', [CasinoController::class, 'deleteCasino']);
+    Route::delete('/casino/page', [CasinoController::class, 'page']);
 
     //GameType
     Route::post('/add_game_type', [GameTypeController::class, 'addGameType']);
@@ -86,4 +87,4 @@ Route::group(['middleware' => 'checkjwt'], function () {
     Route::post('/add_movie', [MovieController::class, 'add']);
     Route::post('/edit_movie/{id}', [MovieController::class, 'edit']);
     Route::delete('/delete_movie/{id}', [MovieController::class, 'delete']);
-});
+// });
